@@ -1,0 +1,376 @@
+öØ®
+100
+100
+100
+-20
+40
+160
+
+   X
+   Y
+   Z
+   A
+   B
+   C
+ Name:
+  G54
+50
+50
+50
+
+
+
+Mitte (nach oben)
+  G55
+50
+50
+50
+90
+
+
+Mitte (nach vorne)
+  G56
+
+
+
+
+
+
+
+  G57
+
+
+
+
+
+
+
+Quader
+;%{[
+P
+(
+)
+2
+A_rechts
+B_rechts
+BC_rechts
+streng nach PAL
+L_ein
+*#~
+4
+
+
+
+
+
+
+
+
+
+
+
+
+Aussen_Nein
+Nr.
+
+
+
+     Bezeichnung
+ >  d   <
+Lng
+ VR
+ VL
+Zähne
+
+ L1
+ d2
+1
+1
+1,3
+0,6
+Spitzsenker
+10,4
+
+
+
+10
+
+6,76
+6,24
+2
+2
+4
+1
+Bohrer
+6,5
+
+
+
+2
+
+13
+6,5
+3
+3
+2,5
+0,9
+Schaftfräser
+12
+
+
+
+8
+
+15
+10,8
+4
+3
+2,5
+0,9
+Schaftfräser
+16
+
+
+
+10
+
+20
+14,4
+5
+2
+4
+1
+Bohrer
+10
+
+
+
+2
+
+20
+10
+6
+1
+1,3
+0,6
+Spitzsenker
+16,5
+
+
+
+12
+
+10,73
+9,9
+7
+3
+2,5
+0,9
+Schaftfräser
+24
+
+
+
+10
+
+30
+21,6
+
+
+
+
+
+
+
+
+
+
+
+
+
+9
+7
+0,6
+0,65
+Gewindebohrer M8
+8
+
+
+
+3
+
+2,4
+5,2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+öØ®
+   ; Parameter-Definition
+P101=50  ; halbe Kantenläge
+P102=4   ; Anzahl der Würfel
+P103=0,96; Kreistaschenradius in Prozent
+   ; Berechnungen:
+P201= P102/( P102+1);Faktor
+
+G90 G55
+T7 S1200 F140
+G0 Z110
+G0 X0 Y0 Z70
+Z70 M03
+
+N15 P202= P101+1; Start-Z
+P203= P101* P201; End-Z
+P204= P101* P103
+G23 N19 N23 H=(P102-1)
+N19 G73 ZA= P203 R= P204 D10 V1 Q1 O2 H1 DH3 RH6 DB80
+G79 X0 Y0 Z= P202 AR-10 W= (P203 + 1)
+P202= P202* P201
+P203= P203* P201
+N23 P204= P204* P201
+
+G0 X0 Y50 Z90
+G54
+G0 X0 Y0 Z70
+
+N29 G23 N15 N23
+G0 X0 Z90
+G16 BR90 H2
+N32 G0 X0 Z70
+G23 N29 N32 H2
+
+G0 Y50 Z70
+G16 AR-90 H2
+G0 X0 Y0 Z70
+G23 N15 N23
+G0 Z70
+G0 Y-70
+M30
+
+

@@ -1,0 +1,377 @@
+öØ®
+120
+20
+50
+-50
+0
+60
+
+   X
+   Y
+   Z
+   A
+   B
+   C
+ Name:
+  G54
+60
+60
+50
+
+0
+
+Teilkopf
+  G55
+100
+50
+
+
+
+
+Schraubstock1
+  G56
+
+
+
+
+
+
+
+  G57
+
+
+
+
+
+
+
+Hohlzylinder hoch
+;(%
+#
+[
+]
+15
+A_rechts
+B_rechts
+BC_rechts
+kein PAL
+L_aus
+*#~
+7
+
+Höhe
+Durchmesser
+
+50
+26
+
+33
+120
+
+11
+120
+
+9
+116
+
+9
+50
+
+0
+50
+Aussen_ja
+Nr.
+
+
+
+     Bezeichnung
+ >  d   <
+Lng
+ VR
+ VL
+Zähne
+
+ L1
+ d2
+1
+1
+1,3
+0,6
+Spitzsenker
+10,5
+
+
+
+10
+
+6,83
+6,3
+2
+2
+4
+1
+Bohrer
+6
+
+
+
+2
+
+12
+6
+3
+9
+0,275
+0,4
+Scheibenfräser
+80
+
+
+
+12
+
+11
+32
+4
+6
+0,9
+0,9
+Torusfräser
+8,5
+
+
+
+12
+
+3,82
+7,65
+5
+11
+4,5
+0,8
+Fräser abgerundet
+8
+
+
+
+10
+
+18
+6,4
+6
+2
+12,1212121212121
+1
+Bohrer
+3,3
+
+
+
+2
+
+20
+3,3
+7
+7
+7
+1,5
+Gewindebohrer
+4
+
+
+
+3
+
+14
+6
+8
+3
+4,5
+1
+Schaftfräser
+8
+
+
+
+3
+
+18
+8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+öØ®
+;programmiere direkt die Achswinkel statt Raumwinkel bei einer Kinematik "WBC"
+;Eine andere Kinematik, z.B. "WCB" reagiert anders!!!  Probier's aus! (Strg+E)
+;PALmill5 kennt sogar einige wenige Fanuc-Befehle (z.B. IF..., GOTO, WHILE...)
+
+
+#101=52  ;Radius
+#102=3   ;Anzahl
+#103=36  ;Bogenwinkel
+
+;berechne
+#111=360/#102  ;Verdrehwinkel
+
+M6 T8 S3000 F250
+G54
+G90 G00 X0 Y0. Z25. B15  C0
+G1 Z4.5 M03
+M97 P3000 L#102              ;lokales Unterprogramm wird L-mal aufgerufen
+G90 G00 Z50 M05
+M30
+
+
+O2000                        ;Anfang Fanuc-Unterprogramm mit "O" wie Otto
+G91
+G01 x #101 Z-1.5 C #103 B 8  ;Simultanbewegungen
+    x-#101 Z-1.5 C-#103 B-8
+M99                          ;Ende Fanuc-Unterprogramm
+
+
+O3000
+G90 G00 X0 Y0 Z3.5
+M97 P2000 L3
+G00 Z3.5
+G00 C#111
+M99

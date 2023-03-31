@@ -1,0 +1,395 @@
+öØ®
+140
+120
+90
+-100
+200
+300
+
+   X
+   Y
+   Z
+   A
+   B
+   C
+ Name:
+  G54
+0
+0
+0
+
+
+
+
+  G55
+140
+120
+90
+
+
+
+Ecke rechts oben hinten
+  G56
+
+
+
+
+
+
+
+  G57
+
+
+
+
+
+
+
+Quader
+;%{[
+P
+(
+)
+2
+A_rechts
+B_rechts
+BC_rechts
+streng nach PAL
+L_ein
+*#~
+4
+
+
+
+
+
+
+
+
+
+
+
+
+Aussen_Nein
+Nr.
+
+
+
+     Bezeichnung
+ >  d   <
+Lng
+ VR
+ VL
+Zähne
+
+ L1
+ d2
+1
+1
+1,3
+0,6
+Spitzsenker
+10,5
+
+
+
+10
+
+6,83
+6,3
+2
+1
+1,3
+0,6
+Bohrer
+10
+
+
+
+2
+
+6,5
+6
+3
+3
+2,5
+0,9
+Schaftfräser
+60
+
+
+
+10
+
+75
+54
+4
+6
+0,9
+0,9
+Torusfräser
+20
+
+
+
+12
+
+9
+18
+5
+3
+2,5
+0,9
+Schaftfräser
+12
+
+
+
+10
+
+15
+10,8
+6
+
+
+
+
+
+
+
+
+
+
+
+
+7
+
+
+
+
+
+
+
+
+
+
+
+
+8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+öØ®
+ ;Demonstration der unterschiedlichen Koordinatendrehungen nach G15 (u. G16)
+ ; Tipp: während der Simulation "e" und "m" drücken und dann die Winkelangaben beobachten    ggf. mit ESC abbrechen und mit F8 den Simulationsbilschirm (ohne Wkz) studieren; evtl. Seitenansicht oder Schnitte anwählen
+
+G55 G90            ; vom Maschinen-Nullpunkt zur Ecke oben rechts hinten
+F150 S600 T3 TR0.5 TL0.1 M13
+G0 x-50 y40 z90
+          ; diagonal bohren:    Flächennormale setzen
+G15 XB100 YB0 ZB0   XN140 YN120 ZN90  ;Ebenenanwahl mit Basis- und Zustellvektor
+          ; X-Vektor ist hier nicht ganz orthogonal zum Normalenvektor. Macht nichts, denn er wird auf die Bearbeitungsebene projiziert
+          ; Aufgabe1: Berechne (mittels Tangensfunktion) aus den Kanten 140, 120 und 90 die je. Winkel und vergleiche sie rechts mit den Raumwinkel (Roll-Pich-Yaw) in der Simulation (rechte Tabelle).
+          ; Aufgabe2: Erkläre dir, warum die Winkel nicht übereinstimmen!  !!!
+g0 x-60 y0 z-12
+m0
+G1 x20
+g0 Z30
+F150 S600 T2 TR0.5 TL0.1 M13  ; Wkz-Wechsel: Bohrer
+g0 x0 y0 z-10
+g1 z-230
+G0 z50
+F150 S600 T3 TR0.5 TL0.1 M13
+G15    ; setzt die Koordinatendrehung (hier: von G55) wieder auf Null
+G0 x-200 y40 z90
+
+ ;  Schräge Fläche fräsen, die durch die 3 Quaderecken definiert ist: Hier ist der Zustellvektor (Flächen-Normale) unbekannt.    ??
+G15 XD-140 YD-120 ZD-90   XE0 YE-120 ZE0   XF-140 YF0 ZF0   ;Drei–Punkte–Definition einer Bearbeitungsebene
+G0 x-80 y0 z0
+G1 x0 y20 z-0 ;   (Bitte die unrealistischen Zustellwerte ignorieren!)
+x150
+x110
+x70 y120
+x0 y0 z0
+N13 g0 z50
+
+ ; vordere schräge Kante unter 45 Grad fasen:
+G16 AR45    ; Inkrementelle Drehung der aktuellen Bearbeitungsebene
+G0 x-40 y0 z-2
+g01 x150
+x200 y-50 z100
+
+m0
+; Aufgabe 3: Nochmal simulieren und dann die Achswinkel (Simulationsfenster oben) mit den
+;            Raumwinkel (rechte Tabelle) vergleichen und die Differenz erklären.
+
+; keilförmige Fase fräsen: 15 Grad in der Draufsicht und 15 Grad in Richtung hintere Seite
+G54
+G59 XA140 ZA90
+G15 AS-8  CS98
+G0 X-50 Y0 Z0
+G01 X120
+G00 Z50
+; Aufgabe 4: Was müsste man ändern, wenn man nicht untere Fasen-Kante als X-Achse festlegen will, sondern
+;            die obere Kante?   Achtung: math. Rechtssystem beachten!   Trage deine Änderungen ins Programm ein.
+
+; Aufgabe 5: Wie und wo ist jew. das Koordinatensystem, wenn folgende Befehle eingegeben werden?
+  ;G15
+  ;G50
+  ;G55   ; Zuerst überlegen und dann erst probieren!!
+
+m30
+
+

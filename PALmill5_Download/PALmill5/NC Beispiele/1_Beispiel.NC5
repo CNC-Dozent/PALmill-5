@@ -1,0 +1,453 @@
+öØ®
+100
+100
+100
+-30
+100
+160
+
+   X
+   Y
+   Z
+   A
+   B
+   C
+ Name:
+  G54
+50
+50
+100
+
+
+
+
+  G55
+50
+0
+42
+90
+
+
+Schraubstock1
+  G56
+
+
+
+
+
+
+
+  G57
+
+
+
+
+
+
+
+Quader
+;%{[
+P
+(
+)
+2
+A_rechts
+B_rechts
+BC_rechts
+streng nach PAL
+L_ein
+*#~
+5
+
+Höhe
+Durchmesser
+
+40
+234
+
+30
+234
+
+30
+25
+
+0
+25
+Aussen_Nein
+Nr.
+
+
+
+     Bezeichnung
+ >  d   <
+Lng
+ VR
+ VL
+Zähne
+
+ L1
+ d2
+1
+1
+1,3
+0,6
+Spitzsenker
+10,4
+
+
+
+8
+
+6,76
+6,24
+2
+2
+4
+1
+Bohrer
+6,5
+
+
+
+2
+
+13
+6,5
+3
+3
+2,5
+0,9
+Schaftfräser
+12
+
+
+
+8
+
+15
+10,8
+4
+3
+2,5
+0,9
+Schaftfräser
+16
+
+
+
+6
+
+20
+14,4
+5
+2
+4
+1
+Bohrer
+10
+
+
+
+2
+
+20
+10
+6
+1
+1,3
+0,6
+Spitzsenker
+16,5
+
+
+
+8
+
+10,73
+9,9
+7
+3
+2,5
+0,9
+Schaftfräser
+24
+
+
+
+6
+
+30
+21,6
+8
+4
+0,3
+0,5
+Planfräser
+30
+
+
+
+5
+
+4,5
+15
+9
+7
+0,6
+0,65
+Gewindebohrer M8
+8
+
+
+
+3
+
+2,4
+5,2
+10
+3
+2,5
+0,9
+Schaftfräser Schlichten
+24
+
+
+
+8
+
+30
+21,6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+öØ®
+; Beispiel der wichtigsten Funktionen der PAL-CNC
+; bitte F1-Taste drücken, wenn der G-Befehl in der jew. Befehlszeile unbekannt ist
+
+P1=-5      ;Parameter für die Tiefe
+G90 G54 G94 G97 T7 S900 F100 TR0,3   ;TR0,3 = Offset für Schruppen
+N6 G0 Y-80 X20 Z20
+   G0 Z= P1
+   G41 G47 R5 M3
+   G1 X0 Y-50 M3
+   X-10 Y-40;RN15
+   X-40 AS170 RN3
+   Y-20;RN15
+   G03 X-40 Y20 R25
+   G1 Y35
+   X20
+   G1 AS-30
+   AS100
+   X40 Y0
+   X50 AS-20
+   G40 G48 R5
+N21 G0 Z20
+
+P1=-10
+G23 N6 N21     // Unterprogramm-Aufruf der obigen Kontur
+
+G00 Z50
+T10 S1200 F160 // ohne TR => Offset = 0  (Schlichten)
+G23 N6 N21     // erneuter Aufruf der obigen Kontur
+
+G0 Y-80 X20 Z20
+P1=-15
+G67 SK1,22 Q2  // Skalieren
+G23 N6 N21
+G67 SK1
+G0 X-80
+
+T1 S1000 F100 TR-3
+G0 Y-30 X-70 Z50
+p1=-3,9
+G23 N6 N21;Wo steckt der Fehler (s. Draufsicht!) und warum?
+
+T03 S800 F100 M03
+G0 X50
+G59 X50 Z-52
+G17 BM90
+G0 X0 Y0 Z20
+
+G75 ZA-6 BP16 RP35 D3 V2 AN-110 AO40 W5 EP0 O1 Q1 H14   // Nutenfräs-Zyklus Kreisbogen
+G77 IA0 JA0 Z1 AP90 AI70 O4  // Aufruf Mehrfachzyklus
+G0 Z50
+X-70
+M0  ;Simulation hält hier an, bis RETURN gedrückt wird.
+T7 S1800 F200
+
+G17
+G54
+G59 X50 Y-50
+G16 CR45
+G16 AR45
+G0 X0 Y0 Z20
+Z1
+G72 LP12 BP6 ZA-10 D4 V0.5 H2 Q3
+G79 X0 Y2 Z1
+G72 LP18 BP8 ZA-18 D4 V0.5 H2 Q3
+G79 X0 Y2 Z-7
+G0 Z20
+
+T6 S960 F80
+G0 X0 Y0 Z20
+G01 Z-25
+G0 Z20
+
+T5 G96 G95 S25 F0,15
+G0 X0 Y0 Z10
+G83 ZA-80 D12 V1
+G79 X0 Y0 Z-12
+G0 Z50
+
+T04 G94 G97 S800 F100
+G0 X-50 Y-50 Z50
+G55
+G0 X0 Y0 Z50
+G72 ZA-6 LP66 BP66 D3 V0,5 EP0 Q3 O2 H1 AK0.3 AL0.2 DH0.9 RH3 RN5,8 DB80  ;Schruppen
+G79 X0 Y0 Z0,5 AR-10 W10
+
+G72 ZA-6 LP66 BP66 D10 V0,5 EP0 Q3 O2 H14 DH0.9 RH3 RN5,8 DB80 ;Schlichten
+G79 X0 Y0 Z-5 AR-10 W10
+
+G73 ZA-15 R28 RZ6 D3 V0,5 Q2 O1 H1 AK0.3 AL0,2 DH5.9 RH6 DB80   //Schruppen
+G79 X0 Y0 Z-5 AR0 W10
+
+G73 ZA-15 R28 RZ6 D10 V0,5 Q2 O1 H4  DH5.9 RH6 DB80  //Schlichten
+G79 X0 Y0 Z-5 AR0 W10
+
+T1 F120 S2600 M13
+G0 Z20
+   X0 Y0
+G81 ZI-5 V2
+N92 G77 Z-4 IA0 JA0 R35 AN35 AI90 O4
+N93 G77 Z-13 IA0 JA0 R20 AN-100 AI120 O3 W20 H3
+T2 F130 S1360 M13
+G0 Z20
+G82 ZI-15 D3 V2
+G23 N92 N93
+S290 T9 M8
+G0 Z20
+G84 ZI-12 F1.25 V2 M3
+G23 N92 N93
+
+G0 Z50
+X-60
+G54
+M30
+
+
+
